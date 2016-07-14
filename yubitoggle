@@ -1,0 +1,50 @@
+#!/bin/bash
+
+debug(){
+  message="$1"
+  if ! [ -z ${DEBUG+x} ]; then
+    echo $message
+  fi
+}
+
+check_for_xinput() {
+  if  ! command -v xinput &> /dev/null; then
+    echo "Please install xinput and make sure it's on \$PATH"
+    exit 1
+  fi
+}
+
+find_yubikey_name(){
+  yubikey=$(xinput --list --name-only | grep -i yubikey)
+  debug "Key name: $yubikey"
+}
+
+exit_if_no_yubikey(){
+  if [ "$yubikey" = "" ]; then
+    echo "No yubikey found"
+    exit 1
+  fi
+}
+
+get_yubikey_state(){
+  yubikey_state=$(xinput --list-props "$yubikey" | grep 'Device Enabled' | cut -d: -f 2 | sed 's/[^0-9]*//g')
+  debug "yubikey state: $yubikey_state"
+}
+
+toggle_yubikey(){
+  toggle_value=1
+  if [ "$yubikey_state" = "0" ]; then
+    debug "enabling yubikey"
+    toggle_value="1"
+  else
+    debug "disabling yubikey"
+    toggle_value="0"
+  fi
+  xinput --set-prop "$yubikey" "Device Enabled" "$toggle_value"
+}
+
+check_for_xinput
+find_yubikey_name
+exit_if_no_yubikey
+get_yubikey_state
+toggle_yubikey
