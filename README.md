@@ -1,6 +1,8 @@
 # yubitoggle
 
-Use xinput to toggle a yubikey on and off.
+Use xinput to toggle a yubikey on and off. This allows you to keep the key
+plugged in and not worry about accidentally entering tokens with errant
+touches.
 
 ## Getting started
 
