@@ -13,6 +13,7 @@ Use xinput to toggle a yubikey on and off.
 ## Known issues
 
 - This only works for a single yubikey.
+- Only tested on ubuntu 16.04 but should work on a bunch of linuxes.
 
 ## See also
 
