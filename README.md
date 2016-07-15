@@ -11,6 +11,8 @@ touches.
 - Put `yubitoggle` somewhere on path. It doesn't require any special privileges.
 - Run `yubitoggle` If all goes well, your yubikey will be enabled / disabled.
 - You can run `DEBUG=1 yubitoggle` to get some basic debugging info.
+- `yubitoggle --state` will tell you if the yubikey is off or on. "0" == off,
+  "1" == on. This is useful in scripts.
 
 ## Known issues
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+action="$1"
+
 debug(){
   message="$1"
   if ! [ -z ${DEBUG+x} ]; then
@@ -43,8 +45,17 @@ toggle_yubikey(){
   xinput --set-prop "$yubikey" "Device Enabled" "$toggle_value"
 }
 
+echo_yubikey_state() {
+  echo "$yubikey_state"
+}
+
 check_for_xinput
 find_yubikey_name
 exit_if_no_yubikey
 get_yubikey_state
-toggle_yubikey
+
+if [ "$action" = "--state" ]; then
+  echo_yubikey_state
+else
+  toggle_yubikey
+fi
