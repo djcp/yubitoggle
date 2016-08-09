@@ -13,6 +13,8 @@ touches.
 - You can run `DEBUG=1 yubitoggle` to get some basic debugging info.
 - `yubitoggle --state` will tell you if the yubikey is off or on. "0" == off,
   "1" == on. This is useful in scripts.
+- Use `yubitoggle --off` or `yubitoggle --on` to turn it explicitly off or on
+  rather than toggling
 
 ## Known issues
 

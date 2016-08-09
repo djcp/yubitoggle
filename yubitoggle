@@ -33,6 +33,12 @@ get_yubikey_state(){
   debug "yubikey state: $yubikey_state"
 }
 
+set_key_to(){
+  desired_state="$1"
+  debug "desired state: $desired_state for $yubikey"
+  xinput --set-prop "$yubikey" "Device Enabled" "$desired_state"
+}
+
 toggle_yubikey(){
   toggle_value=1
   if [ "$yubikey_state" = "0" ]; then
@@ -42,7 +48,7 @@ toggle_yubikey(){
     debug "disabling yubikey"
     toggle_value="0"
   fi
-  xinput --set-prop "$yubikey" "Device Enabled" "$toggle_value"
+  set_key_to "$toggle_value"
 }
 
 echo_yubikey_state() {
@@ -55,7 +61,15 @@ exit_if_no_yubikey
 get_yubikey_state
 
 if [ "$action" = "--state" ]; then
+  debug 'display state'
   echo_yubikey_state
+elif [ "$action" = "--on" ]; then
+  debug 'turn on'
+  set_key_to "1"
+elif [ "$action" = "--off" ]; then
+  debug 'turn off'
+  set_key_to "0"
 else
+  debug 'toggle state'
   toggle_yubikey
 fi
